@@ -320,6 +320,14 @@ run_prebuild_script "$BUILD_DIR" | output "$LOG_FILE"
 header "Installing dependencies" | output "$LOG_FILE"
 build_dependencies | output "$LOG_FILE"
 
+cat_npm_debug_log() {
+  if [ -f $BUILD_DIR/npm-debug.log ]; then
+    cat $BUILD_DIR/npm-debug.log
+  fi
+}
+
+trap cat_npm_debug_log EXIT
+
 cache_build() {
   local cache_directories cache_build_start_time
   cache_build_start_time=$(nowms)
